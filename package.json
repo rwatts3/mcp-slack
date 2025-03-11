@@ -1,6 +1,7 @@
 {
-  "name": "@shouting-mcp/mcp-slack",
-  "version": "1.0.0",
+  "private": false,
+  "name": "shouting-mcp-slack",
+  "version": "1.4.1",
   "description": "MCP server for interacting with Slack",
   "main": "index.js",
   "repository": {

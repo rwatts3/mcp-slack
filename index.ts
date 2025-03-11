@@ -210,7 +210,23 @@ const getUserProfileTool: Tool = {
   },
 };
 
+const lookupUserByEmailTool: Tool = {
+  name: "lookup_user_by_email",
+  description: "Lookup a user by their email address",
+  inputSchema: {
+    type: "object",
+    properties: {
+      email: {
+        type: "string",
+        description: "The email address of the user",
+      },
+    },
+    required: ["email"],
+  },
+};
+
 class SlackClient {
+  
   private botHeaders: { Authorization: string; "Content-Type": string };
 
   constructor(botToken: string) {
@@ -218,6 +234,20 @@ class SlackClient {
       Authorization: `Bearer ${botToken}`,
       "Content-Type": "application/json",
     };
+  }
+
+  async lookupUserByEmail(email: string): Promise<any> {
+
+    const params = new URLSearchParams({
+      email: email,
+    });
+
+    const response = await fetch(`https://slack.com/api/users.lookupByEmail?${params}`, {
+      method: "GET",
+      headers: this.botHeaders,
+    });
+
+    return response.json();
   }
 
   async getChannels(limit: number = 100, cursor?: string): Promise<any> {
@@ -506,6 +536,15 @@ async function main() {
             };
           }
 
+          case "lookup_user_by_email": {
+            const args = request.params.arguments as { email: string };
+            const response = await slackClient.lookupUserByEmail(args.email);
+            return {
+              content: [{ type: "text", text: JSON.stringify(response) }],
+            };
+          }
+
+
           default:
             throw new Error(`Unknown tool: ${request.params.name}`);
         }
@@ -537,6 +576,7 @@ async function main() {
         getThreadRepliesTool,
         getUsersTool,
         getUserProfileTool,
+        lookupUserByEmailTool,
       ],
     };
   });
