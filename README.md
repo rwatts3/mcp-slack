@@ -1,5 +1,7 @@
 # MCP Server for Slack
 
+[![npm version](https://img.shields.io/npm/v/shouting-mcp-slack.svg)](https://www.npmjs.com/package/shouting-mcp-slack)
+
 A Model Context Protocol (MCP) server implementation for integrating AI assistants with Slack workspaces.
 
 ## Overview
@@ -23,6 +25,8 @@ npm install shouting-mcp-slack
 # Or install globally
 npm install -g shouting-mcp-slack
 ```
+
+You can find the package on npm: [shouting-mcp-slack](https://www.npmjs.com/package/shouting-mcp-slack/access)
 
 ## Prerequisites
 
